@@ -7,8 +7,9 @@ Game::Game()
 	sf::View view(sf::Vector2f(1920/2, 1080/2), sf::Vector2f(1920, 1080));
 	window.setView(view);
 
-	shootingArea.setSize(sf::Vector2f(1920, 300));
-	shootingArea.setFillColor(sf::Color(200, 200, 200));
+	arena.setRadius(1000);
+	arena.setOrigin(arena.getRadius(), arena.getRadius());
+	arena.setPosition(1920/2, 900);
 }
 
 void Game::run() 
@@ -68,12 +69,12 @@ int Game::update()
 
 	player.update();
 
+	
 	return state;
 }
 
 void Game::draw()
 {
-	window.draw(shootingArea);
-
+	window.draw(arena);
 	player.draw(window);
 }

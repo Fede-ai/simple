@@ -1,9 +1,10 @@
 #include "Player.h"
+#include <math.h>
 
 Player::Player()
 {
 	body.setFillColor(sf::Color::Red);
-	body.setSize(sf::Vector2f(70, 100));
+	body.setSize(sf::Vector2f(50, 70));
 	body.setOrigin(body.getSize().x / 2, body.getSize().y / 2);
 	body.setPosition(1920 / 2, 1080 - 280);
 }
@@ -117,12 +118,12 @@ void Player::collide()
 		body.setPosition(body.getSize().x / 2, body.getPosition().y);
 	}
 
-	if (body.getPosition().y + body.getSize().y / 2 > 1080)
+	if (body.getPosition().y + body.getSize().y / 2 > 900)
 	{
-		body.setPosition(body.getPosition().x, 1080 - body.getSize().y / 2);
+		body.setPosition(body.getPosition().x, 900 - body.getSize().y / 2);
 	}
-	else if (body.getPosition().y - body.getSize().y / 2 < 300)
+	else if (body.getPosition().y - body.getSize().y / 2 < 0)
 	{
-		body.setPosition(body.getPosition().x, 300 + body.getSize().y / 2);
+		body.setPosition(body.getPosition().x, body.getSize().y / 2);
 	}
 }

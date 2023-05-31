@@ -17,6 +17,6 @@ private:
 	bool isFullscreen = false;
 	bool canFullscreen = false;
 
-	sf::RectangleShape shootingArea;
+	sf::CircleShape arena;
 	Player player;
 };
