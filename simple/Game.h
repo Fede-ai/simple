@@ -17,6 +17,8 @@ private:
 	bool isFullscreen = false;
 	bool canFullscreen = false;
 
-	sf::CircleShape arena;
 	Player player;
+
+	sf::Sprite field;
+	sf::Texture fieldTexture;
 };

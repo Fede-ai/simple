@@ -23,4 +23,6 @@ private:
 	bool canDash = false;
 	int framesToEndDash = 0;
 	char dashDirection = ' '; //'w', 'a', 's', 'd'
+
+	//sf::RectangleShape
 };

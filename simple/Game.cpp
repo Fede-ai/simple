@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game()
 {
@@ -7,13 +8,31 @@ Game::Game()
 	sf::View view(sf::Vector2f(1920/2, 1080/2), sf::Vector2f(1920, 1080));
 	window.setView(view);
 
-	arena.setRadius(1000);
-	arena.setOrigin(arena.getRadius(), arena.getRadius());
-	arena.setPosition(1920/2, 900);
+	fieldTexture.loadFromFile("resources/arena.png");
+	field.setTexture(fieldTexture);
+	field.setScale(4, 4);
 }
 
 void Game::run() 
 {
+	//to draw circle
+	//sf::Image ok;
+	//ok.create(1920 / 4, 1080 / 4);
+	//for (int i = 0; i < 1800; i++)
+	//{
+	//	float xPoint = cos(i / 1800.f * 3.1415) * 250.f;
+	//	float yPoint = sin(i / 1800.f * 3.1415) * 250.f;
+	//
+	//	int x = 1920 / 8 + xPoint;
+	//	int y = 900 / 4 - yPoint;
+	//	if (x >= 0 && x < 1920 / 4 && y >= 0 && y < 1080 / 4)
+	//	{
+	//		ok.setPixel(x, y, sf::Color::Blue);
+	//	}
+	//}
+	//ok.saveToFile("C:/Users/matte/Desktop/ok.png");
+	//while (true) {}
+
 	while (window.isOpen())
 	{
 		sf::Event windowEvents;
@@ -74,6 +93,7 @@ int Game::update()
 
 void Game::draw()
 {
-	window.draw(arena);
+	window.draw(field);
+
 	player.draw(window);
 }
