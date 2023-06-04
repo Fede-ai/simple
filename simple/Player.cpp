@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <math.h>
+#include <iostream>
 
 Player::Player()
 {
@@ -20,16 +21,37 @@ void Player::update()
 		switch (dashDirection)
 		{
 		case 'w':
-			movement.y = -dashSpeed;
+			if (!collideLeft && !collideRight)
+			{
+				movement.y = -dashSpeed;
+			}
+			else
+			{
+				framesToEndDash = 0;
+			}
 			break;
 		case 's':
 			movement.y = dashSpeed;
 			break;
 		case 'a':
-			movement.x = -dashSpeed;
+			if (!collideLeft)
+			{
+				movement.x = -dashSpeed;
+			}
+			else
+			{
+				framesToEndDash = 0;
+			}
 			break;
 		case 'd':
-			movement.x = dashSpeed;
+			if (!collideRight)
+			{
+				movement.x = dashSpeed;
+			}
+			else
+			{
+				framesToEndDash = 0;
+			}
 			break;
 		}
 	}
@@ -60,6 +82,18 @@ void Player::update()
 			movement.y /= sqrt(2);
 		}
 
+		if (collideLeft)
+		{
+			movement.x = std::max(movement.x, 0.f);
+			movement.y = std::max(movement.y, 0.f);
+		}
+		else if (collideRight)
+		{
+			movement.x = std::min(movement.x, 0.f);
+			movement.y = std::max(movement.y, 0.f);
+		}
+
+		//start dash
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			if (canDash && abs(movement.x) + abs(movement.y) != 0 && dashCdLeft == 0)
@@ -125,5 +159,39 @@ void Player::collide()
 	else if (body.getPosition().y - body.getSize().y / 2 < 0)
 	{
 		body.setPosition(body.getPosition().x, body.getSize().y / 2);
+	}
+
+	collideLeft = false;
+	collideRight = false;
+	//collide with arena left and right part
+	if (body.getPosition().x < 1920/2)
+	{
+		sf::Vector2f topLeft = body.getPosition() - sf::Vector2f(body.getSize().x / 2, body.getSize().y / 2);
+		float distTopLeft = sqrt(std::pow(1920 / 2 - topLeft.x, 2) + std::pow(900 - topLeft.y, 2));
+		if (distTopLeft > 1000)
+		{
+			collideLeft = true;
+			if (distTopLeft > 1010)
+			{				
+				float bodyToVertex = sqrt(pow(body.getSize().x / 2, 2) + pow(body.getSize().y / 2, 2));
+				float angTopLeft = atan((900 - topLeft.y) / (1920 / 2 - topLeft.x));
+				body.setPosition(1920/2 - cos(angTopLeft) * (1000 - bodyToVertex), 900 - sin(angTopLeft) * (1000 - bodyToVertex));
+			}
+		}
+	}
+	else
+	{
+		sf::Vector2f topRight = body.getPosition() - sf::Vector2f(-body.getSize().x / 2, body.getSize().y / 2);
+		float distTopRight = sqrt(std::pow(1920 / 2 - topRight.x, 2) + std::pow(900 - topRight.y, 2));
+		if (distTopRight > 1000)
+		{
+			collideRight = true;
+			if (distTopRight > 1010)
+			{
+				float bodyToVertex = sqrt(pow(body.getSize().x / 2, 2) + pow(body.getSize().y / 2, 2));
+				float angTopRight = atan((900 - topRight.y) / (1920 / 2 - topRight.x));
+				body.setPosition(1920 / 2 - cos(angTopRight) * (1000 - bodyToVertex), 900 - sin(angTopRight) * (1000 - bodyToVertex));
+			}
+		}
 	}
 }

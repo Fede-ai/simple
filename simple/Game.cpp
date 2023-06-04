@@ -38,7 +38,7 @@ void Game::run()
 						}
 						else
 						{	
-							window.create(sf::VideoMode(0, 0), "simple", sf::Style::Fullscreen);
+							window.create(sf::VideoMode(), "simple", sf::Style::Fullscreen);
 							window.setFramerateLimit(60);
 							sf::View view(sf::Vector2f(1920 / 2, 1080 / 2), sf::Vector2f(1920, 1080));
 							window.setView(view);
@@ -68,7 +68,6 @@ int Game::update()
 	int state = 0;
 
 	player.update();
-
 	
 	return state;
 }

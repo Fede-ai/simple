@@ -12,6 +12,9 @@ private:
 	void collide();
 	sf::RectangleShape body;
 
+	bool collideLeft = false;
+	bool collideRight = false;
+
 	const int speed = 7;
 	const int dashSpeed = 25;
 	const int framesDash = 10;
