@@ -8,6 +8,14 @@ Player::Player()
 	body.setSize(sf::Vector2f(50, 70));
 	body.setOrigin(body.getSize().x / 2, body.getSize().y / 2);
 	body.setPosition(1920 / 2, 1080 - 280);
+
+	dashMeterBg.setSize(sf::Vector2f(420, 60));
+	dashMeterBg.setPosition(30, 1080 - 30 - dashMeterBg.getSize().y);
+	dashMeterBg.setFillColor(sf::Color::Black);
+
+	dashMeter.setSize(sf::Vector2f(400 - (float)dashCdLeft / dashCd * 400, 40));
+	dashMeter.setFillColor(sf::Color(255 * (1 - dashMeter.getSize().x / 400), 255 * dashMeter.getSize().x / 400, 0));
+	dashMeter.setPosition(40, 1080 - 40 - dashMeter.getSize().y);
 }
 
 void Player::update()
@@ -129,9 +137,11 @@ void Player::update()
 		}
 	}
 
+	dashMeter.setSize(sf::Vector2f(400 - (float)dashCdLeft / dashCd * 400, 40));
+	dashMeter.setFillColor(sf::Color(255 * (1 - dashMeter.getSize().x / 400), 255 * dashMeter.getSize().x / 400, 0));
+
 	//apply movement
 	body.move(movement);	
-	
 	//collide
 	collide();
 }
@@ -139,6 +149,9 @@ void Player::update()
 void Player::draw(sf::RenderWindow& window)
 {
 	window.draw(body);
+
+	window.draw(dashMeterBg);
+	window.draw(dashMeter);
 }
 
 void Player::collide()

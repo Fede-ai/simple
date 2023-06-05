@@ -24,5 +24,6 @@ private:
 	int framesToEndDash = 0;
 	char dashDirection = ' '; //'w', 'a', 's', 'd'
 
-	//sf::RectangleShape
+	sf::RectangleShape dashMeter;
+	sf::RectangleShape dashMeterBg;
 };
