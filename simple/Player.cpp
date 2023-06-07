@@ -5,17 +5,19 @@
 Player::Player()
 {
 	body.setFillColor(sf::Color::Red);
-	body.setSize(sf::Vector2f(50, 70));
+	body.setSize(sf::Vector2f(40, 60));
 	body.setOrigin(body.getSize().x / 2, body.getSize().y / 2);
 	body.setPosition(1920 / 2, 1080 - 280);
+	lastPos = body.getPosition();
 
 	dashMeterBg.setSize(sf::Vector2f(420, 60));
 	dashMeterBg.setPosition(30, 1080 - 30 - dashMeterBg.getSize().y);
 	dashMeterBg.setFillColor(sf::Color::Black);
-
 	dashMeter.setSize(sf::Vector2f(400 - (float)dashCdLeft / dashCd * 400, 40));
 	dashMeter.setFillColor(sf::Color(255 * (1 - dashMeter.getSize().x / 400), 255 * dashMeter.getSize().x / 400, 0));
 	dashMeter.setPosition(40, 1080 - 40 - dashMeter.getSize().y);
+
+	hitbox.loadFromFile("resources/hitbox.png");
 }
 
 void Player::update()
@@ -140,10 +142,10 @@ void Player::update()
 	dashMeter.setSize(sf::Vector2f(400 - (float)dashCdLeft / dashCd * 400, 40));
 	dashMeter.setFillColor(sf::Color(255 * (1 - dashMeter.getSize().x / 400), 255 * dashMeter.getSize().x / 400, 0));
 
-	//apply movement
 	body.move(movement);	
-	//collide
 	collide();
+
+	lastPos = body.getPosition();
 }
 
 void Player::draw(sf::RenderWindow& window)
@@ -165,16 +167,16 @@ void Player::collide()
 		body.setPosition(body.getSize().x / 2, body.getPosition().y);
 	}
 
-	if (body.getPosition().y + body.getSize().y / 2 > 900)
+	if (body.getPosition().y + body.getSize().y / 2 > 1080)
 	{
-		body.setPosition(body.getPosition().x, 900 - body.getSize().y / 2);
+		body.setPosition(body.getPosition().x, 1080 - body.getSize().y / 2);
 	}
 	else if (body.getPosition().y - body.getSize().y / 2 < 0)
 	{
 		body.setPosition(body.getPosition().x, body.getSize().y / 2);
 	}
 
-	collideLeft = false;
+	/*collideLeft = false;
 	collideRight = false;
 	//collide with arena left and right part
 	if (body.getPosition().x < 1920/2)
@@ -206,5 +208,36 @@ void Player::collide()
 				body.setPosition(1920 / 2 - cos(angTopRight) * (1000 - bodyToVertex), 900 - sin(angTopRight) * (1000 - bodyToVertex));
 			}
 		}
+	}*/
+
+	int left = (body.getPosition().x - body.getSize().x / 2) / 4;
+	int top = (body.getPosition().y - body.getSize().y / 2) / 4;
+
+	while (hitbox.getPixel(left, top).r > 250)
+	{
+		float xBlock = left * 4;
+		float yBlock = top * 4;
+		float lastTop = (lastPos.y - body.getSize().y / 2);
+		float lastLeft = (lastPos.x - body.getSize().x / 2);
+
+		float xDiff = abs(xBlock - lastLeft);
+		float yDiff = abs(yBlock - lastTop);
+
+		if (xDiff > yDiff)
+		{
+			body.setPosition(xBlock + 4 + body.getSize().x / 2, body.getPosition().y);
+		}
+		else
+		{
+			body.setPosition(body.getPosition().x, yBlock + 4 + body.getSize().y / 2);
+		}
+
+		left = (body.getPosition().x - body.getSize().x / 2) / 4;
+		top = (body.getPosition().y - body.getSize().y / 2) / 4;
 	}
+	
+	/*
+	you start from the unmoved position, you move one block towards the moved position, you se if it's empty. 
+	if it is, you try mooving one more block, if it isnt, you return to the previus position, to the nearest multiple of 4
+	*/
 }
