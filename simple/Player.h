@@ -11,11 +11,6 @@ public:
 private:
 	void collide();
 	sf::RectangleShape body;
-	sf::Vector2f lastPos;
-	sf::Image hitbox;
-
-	bool collideLeft = false;
-	bool collideRight = false;
 
 	const int speed = 6;
 	const int dashSpeed = 25;
