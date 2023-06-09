@@ -32,16 +32,40 @@ int Player::update()
 		switch (dashDirection)
 		{
 		case 'w':
+			//top
 			movement.y = -dashSpeed;
 			break;
 		case 's':
+			//bot
 			movement.y = dashSpeed;
 			break;
 		case 'a':
+			//left
 			movement.x = -dashSpeed;
 			break;
 		case 'd':
+			//right
 			movement.x = dashSpeed;
+			break;
+		case 'q':
+			//top-left
+			movement.x = -dashSpeed / sqrt(2);
+			movement.y = -dashSpeed / sqrt(2);
+			break;
+		case 'e':
+			//top-right
+			movement.x = dashSpeed / sqrt(2);
+			movement.y = -dashSpeed / sqrt(2);
+			break;
+		case 'z':
+			//bot-left
+			movement.x = -dashSpeed / sqrt(2);
+			movement.y = dashSpeed / sqrt(2);
+			break;
+		case 'c':
+			//bot-right
+			movement.x = dashSpeed / sqrt(2);
+			movement.y = dashSpeed / sqrt(2);
 			break;
 		}
 	}
@@ -79,25 +103,48 @@ int Player::update()
 			{
 				dashCdLeft = dashCd;
 				framesToEndDash = framesDash;
-				if (movement.x == 0)
+
+				//decide dash direction
+				if (movement.x > 0)
 				{
-					framesToEndDash *= 0.8;
+					if (movement.y > 0)
+					{
+						dashDirection = 'c';
+					}
+					else if (movement.y < 0)
+					{
+						dashDirection = 'e';
+					}
+					else
+					{
+						dashDirection = 'd';
+					}
+				}
+				else if (movement.x < 0)
+				{
+					if (movement.y > 0)
+					{
+						dashDirection = 'z';
+					}
+					else if (movement.y < 0)
+					{
+						dashDirection = 'q';
+					}
+					else
+					{
+						dashDirection = 'a';
+					}
+				}
+				else
+				{
 					if (movement.y > 0)
 					{
 						dashDirection = 's';
 					}
-					else
+					else if (movement.y < 0)
 					{
 						dashDirection = 'w';
 					}
-				}
-				else if (movement.x > 0)
-				{
-					dashDirection = 'd';
-				}
-				else
-				{
-					dashDirection = 'a';
 				}
 			}
 			canDash = false;

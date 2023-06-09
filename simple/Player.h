@@ -21,7 +21,7 @@ private:
 	int dashCdLeft = 0;
 	bool canDash = false;
 	int framesToEndDash = 0;
-	char dashDirection = ' '; //'w', 'a', 's', 'd'
+	char dashDirection = ' '; //w, a, s, d, q, e, z, c
 
 	sf::RectangleShape dashMeter;
 	sf::RectangleShape dashMeterBg;
