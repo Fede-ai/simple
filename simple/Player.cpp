@@ -2,7 +2,9 @@
 #include <math.h>
 #include <iostream>
 
-Player::Player()
+Player::Player(sf::RenderWindow& inWindow)
+	:
+	window(inWindow)
 {
 	body.setFillColor(sf::Color::Red);
 	body.setSize(sf::Vector2f(40, 60));
@@ -17,8 +19,10 @@ Player::Player()
 	dashMeter.setPosition(40, 1080 - 40 - dashMeter.getSize().y);
 }
 
-void Player::update()
+int Player::update()
 {
+	int state = 0;
+
 	sf::Vector2f movement(0, 0);	
 	
 	//continue dash
@@ -109,12 +113,17 @@ void Player::update()
 
 	body.move(movement);	
 	collide();
+	
+	return state;
 }
 
-void Player::draw(sf::RenderWindow& window)
+void Player::drawBody()
 {
 	window.draw(body);
+}
 
+void Player::drawStats()
+{
 	window.draw(dashMeterBg);
 	window.draw(dashMeter);
 }
@@ -136,9 +145,9 @@ void Player::collide()
 	{
 		body.setPosition(body.getPosition().x, 900 - body.getSize().y / 2);
 	}
-	else if (body.getPosition().y - body.getSize().y / 2 < 0)
+	else if (body.getPosition().y - body.getSize().y / 2 < 60)
 	{
-		body.setPosition(body.getPosition().x, body.getSize().y / 2);
+		body.setPosition(body.getPosition().x, 60 + body.getSize().y / 2);
 	}
 
 	//collide with curves

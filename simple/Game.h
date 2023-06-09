@@ -20,5 +20,7 @@ private:
 	Player player;
 
 	sf::Sprite field;
+	sf::Sprite castle;
 	sf::Texture fieldTexture;
+	sf::Texture castleTexture;
 };

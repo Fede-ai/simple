@@ -2,15 +2,21 @@
 #include <iostream>
 
 Game::Game()
+	:
+	player(window)
 {
 	window.create(sf::VideoMode(screenDim.x / 2, screenDim.x * 9 / 32), "simple", sf::Style::Close);
 	window.setFramerateLimit(60);
 	sf::View view(sf::Vector2f(1920/2, 1080/2), sf::Vector2f(1920, 1080));
 	window.setView(view);
 
-	fieldTexture.loadFromFile("resources/arena.png");
+	fieldTexture.loadFromFile("resources/field.png");
 	field.setTexture(fieldTexture);
 	field.setScale(4, 4);
+
+	castleTexture.loadFromFile("resources/castle.png");
+	castle.setTexture(castleTexture);
+	castle.setScale(4, 4);
 }
 
 void Game::run() 
@@ -86,14 +92,22 @@ int Game::update()
 {
 	int state = 0;
 
-	player.update();
+	int playerState = player.update();
 	
 	return state;
 }
 
 void Game::draw()
 {
+	//draw field (grass)
 	window.draw(field);
 
-	player.draw(window);
+	//draw player
+	player.drawBody();
+
+	//draw castle
+	window.draw(castle);
+
+	//draw player's stats
+	player.drawStats();
 }

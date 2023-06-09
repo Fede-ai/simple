@@ -4,13 +4,15 @@
 class Player
 {
 public:
-	Player();
-	void update();
-	void draw(sf::RenderWindow& window);
+	Player(sf::RenderWindow& inWindow);
+	int update();
+	void drawBody();
+	void drawStats();
 
 private:
 	void collide();
 	sf::RectangleShape body;
+	sf::RenderWindow& window;
 
 	const int speed = 6;
 	const int dashSpeed = 25;
