@@ -188,9 +188,9 @@ void Player::collide()
 	}
 
 	//collide with bot/top
-	if (body.getPosition().y + body.getSize().y / 2 > 900)
+	if (body.getPosition().y + body.getSize().y / 2 > 936)
 	{
-		body.setPosition(body.getPosition().x, 900 - body.getSize().y / 2);
+		body.setPosition(body.getPosition().x, 936 - body.getSize().y / 2);
 	}
 	else if (body.getPosition().y - body.getSize().y / 2 < 60)
 	{
