@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "Weapon.h"
 
 class Player
 {
@@ -7,9 +8,11 @@ public:
 	Player(sf::RenderWindow& inWindow);
 	int update();
 	void drawBody();
+	void drawWeapons();
 	void drawStats();
 
 private:
+	std::vector<Weapon> weapons;
 	void collide();
 	sf::RectangleShape body;
 	sf::RenderWindow& window;

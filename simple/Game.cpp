@@ -21,24 +21,6 @@ Game::Game()
 
 void Game::run() 
 {
-	//to draw circle
-	//sf::Image ok;
-	//ok.create(1920 / 4, 1080 / 4);
-	//for (int i = 0; i < 1800; i++)
-	//{
-	//	float xPoint = cos(i / 1800.f * 3.1415) * 250.f;
-	//	float yPoint = sin(i / 1800.f * 3.1415) * 250.f;
-	//
-	//	int x = 1920 / 8 + xPoint;
-	//	int y = 900 / 4 - yPoint;
-	//	if (x >= 0 && x < 1920 / 4 && y >= 0 && y < 1080 / 4)
-	//	{
-	//		ok.setPixel(x, y, sf::Color::Blue);
-	//	}
-	//}
-	//ok.saveToFile("C:/Users/matte/Desktop/ok.png");
-	//while (true) {}
-
 	while (window.isOpen())
 	{
 		sf::Event windowEvents;
@@ -107,6 +89,9 @@ void Game::draw()
 
 	//draw castle
 	window.draw(castle);
+
+	//draw potential weapons/pojectiles
+	player.drawWeapons();
 
 	//draw player's stats
 	player.drawStats();

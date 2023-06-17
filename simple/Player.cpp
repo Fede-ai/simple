@@ -169,6 +169,11 @@ void Player::drawBody()
 	window.draw(body);
 }
 
+void Player::drawWeapons()
+{
+	weapons[0].draw(window);
+}
+
 void Player::drawStats()
 {
 	window.draw(dashMeterBg);
