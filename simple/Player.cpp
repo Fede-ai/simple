@@ -198,7 +198,7 @@ void Player::collide()
 	}
 
 	//collide with curves
-	float dist = sqrt(std::pow(1920 / 2 - body.getPosition().x, 2) + std::pow(900 - body.getPosition().y, 2));	
+	float dist = sqrt(pow(1920 / 2 - body.getPosition().x, 2) + pow(900 - body.getPosition().y, 2));	
 	float bodyToVertex = sqrt(pow(body.getSize().x / 2, 2) + pow(body.getSize().y / 2, 2));
 	if (dist + bodyToVertex > 1000)
 	{
