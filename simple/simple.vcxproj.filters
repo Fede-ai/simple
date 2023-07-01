@@ -27,6 +27,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -38,5 +41,16 @@
     <ClInclude Include="Enemy.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\castle.png">
+      <Filter>File di risorse</Filter>
+    </Image>
+    <Image Include="resources\field.png">
+      <Filter>File di risorse</Filter>
+    </Image>
   </ItemGroup>
 </Project>
